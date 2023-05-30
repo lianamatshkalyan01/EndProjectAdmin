@@ -14,7 +14,7 @@ export default function EditProduct() {
   const submitUpdateProducts = (id)=>async(e)=>{
     e.preventDefault()
     const token = localStorage.getItem('token')
-    if(products.name.trim() === "" || products.price.trim() === "" || products.type.trim() === "" || products.pack_quantity.trim() === "" || products.dosage.trim() === "" || products.composition.trim() === "" || products.side_effect.trim() === "" || products.instruction.trim() === "" || products.storage_condition.trim() === "" || products.image.trim() === "" || products.undercategory_id === ""){
+    if(products.name.trim() === "" || products.price.trim() === "" || products.type.trim() === "" || products.pack_quantity.trim() === "" || products.dosage.trim() === "" || products.image.trim() === "" || products.undercategory_id === ""){
         setErr("Fill all fields")
       return
     }
@@ -26,11 +26,6 @@ export default function EditProduct() {
           price: products.price,
           type: products.type,
           pack_quantity: products.pack_quantity,
-          dosage: products.dosage,
-          composition: products.composition,
-          side_effect: products.side_effect,
-          instruction: products.instruction,
-          storage_condition: products.storage_condition,
           image: products.image,
           undercategory_id: products.undercategory_id
         }),
@@ -99,26 +94,10 @@ export default function EditProduct() {
   ...prevState,
   dosage: e.target.value
 }))} />
-<TextField id='composition,' label="composition," value={products?.composition} onChange={(e)=>setProducts((prevState)=>({
-  ...prevState,
-  composition: e.target.value
-}))} />
-<TextField id='side_effect,' label="side_effect," value={products?.side_effect} onChange={(e)=>setProducts((prevState)=>({
-  ...prevState,
-  side_effect: e.target.value
-}))} />
-<TextField id='instruction' label="instruction" value={products?.instruction} onChange={(e)=>setProducts((prevState)=>({
-  ...prevState,
-  instruction: e.target.value
-}))} />
-<TextField id='storage_condition' label="storage_condition" value={products?.storage_condition} onChange={(e)=>setProducts((prevState)=>({
-  ...prevState,
-  storage_condition: e.target.value
-}))} />
  <input
           type="file"
           accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e) => setImage(e.target.files)}
         />
 <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">UnderCategory</InputLabel>

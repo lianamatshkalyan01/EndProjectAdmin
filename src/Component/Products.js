@@ -45,10 +45,6 @@ export default function Product() {
                             <TableCell align="center">Type</TableCell>
                             <TableCell align="center">Pack_quantity</TableCell>
                             <TableCell align="center">Dosage</TableCell>
-                            <TableCell align="center">Composition</TableCell>
-                            <TableCell align="center">Side_effect</TableCell>
-                            <TableCell align="center">Instruction</TableCell>
-                            <TableCell align="center">storage_condition</TableCell>
                             <TableCell align="center">UnderCategory Name</TableCell>
                             <TableCell align="center">Image</TableCell>
                             <TableCell align="center">Options</TableCell>
@@ -64,10 +60,6 @@ export default function Product() {
                               <TableCell align="center">{products.type}</TableCell>
                               <TableCell align="center">{products.pack_quantity}</TableCell>
                               <TableCell align="center">{products.dosage}</TableCell>
-                              <TableCell align="center">{products.composition}</TableCell>
-                              <TableCell align="center">{products.side_effect}</TableCell>
-                              <TableCell align="center">{products.instruction}</TableCell>
-                              <TableCell align="center">{products.storage_condition}</TableCell>
                               <TableCell align="center">{products.UnderCategory?.name}</TableCell>
                               <TableCell>
                                     <img src={`http://localhost:5000/${products?.img}`} alt="Product" style={{ width: "100px", height: "100px" }} />

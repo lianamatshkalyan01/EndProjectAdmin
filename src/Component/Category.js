@@ -39,8 +39,8 @@ function Category() {
                     <TableHead >
                         <TableRow >
                             <TableCell sx={{fontWeight:"bold", fontSize:"20px"}}>Name</TableCell>
-                            <TableCell sx={{fontWeight:"bold", fontSize:"20px"}}>Options</TableCell>
                             <TableCell sx={{fontWeight:"bold", fontSize:"20px"}}>Image</TableCell>
+                            <TableCell sx={{fontWeight:"bold", fontSize:"20px"}}>Options</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -50,6 +50,9 @@ function Category() {
                             >
                                 <TableCell>{category.name}</TableCell>
                                 <TableCell>
+                                    <img src={`http://localhost:5000/${category?.img}`} alt="Category" style={{ width: "100px", height: "100px" }} />
+                                </TableCell>
+                                <TableCell>
                                 <Link to={`/updatecategory/${category.id}`}>
                                         <EditIcon />
                                     </Link>
@@ -57,9 +60,7 @@ function Category() {
                                 <DeleteOutlineIcon />
                                 </Link>
                                 </TableCell>
-                                <TableCell>
-                                    <img src={`http://localhost:5000/${category?.img}`} alt="Category" style={{ width: "100px", height: "100px" }} />
-                                </TableCell>
+                                
                             </TableRow>
                         ))}
                     </TableBody>

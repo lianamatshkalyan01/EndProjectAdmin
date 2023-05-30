@@ -49,8 +49,9 @@ export default function CreateCategory() {
         <TextField id='name' required label="Name" onChange={(e)=>setName(e.target.value)}>Name</TextField>
         <input
           type="file"
+          name="img"
           accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e) => setImage(e.target.files)}
         />
         <Button variant="outlined" onClick={submitCreateCategory} >Create</Button>
         <Typography component="p" color="red">
