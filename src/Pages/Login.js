@@ -38,7 +38,7 @@ export default function Login() {
           return
         }
         try{
-            const response= await fetch("http://localhost:5000/login",{
+            const response= await fetch("http://localhost:5000/user/login",{
                 method:"POST",
                 body: JSON.stringify({
                     email,
@@ -55,8 +55,6 @@ export default function Login() {
            const decodedToken = decodeToken(token);
             if (decodedToken.role === 'admin') {
               navigate('/admin');
-            } else if (decodedToken.role === 'user') {
-              navigate('/user')
             }
         } catch(err){
             console.log(err)

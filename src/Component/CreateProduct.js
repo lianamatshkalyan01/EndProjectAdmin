@@ -3,6 +3,7 @@ import { Box } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
 export default function CreateProduct() {
   const navigate = useNavigate()
   const[name, setName]=useState('')
@@ -15,27 +16,22 @@ export default function CreateProduct() {
   const[undercategories, setUnderCategories] = useState([])
   const[err, setErr]=useState("")
                    
-
   async function submitCreateProduct(e){
     e.preventDefault()
     const token = localStorage.getItem('token')
+        const formData = new FormData();
+        formData.append('name', name);
+        if (image) {
+        formData.append('img', image[0]);
+    }
     try{
       const response = await fetch('http://localhost:5000/prod/new', {
         method: "POST",
-        body: JSON.stringify({
-          name,
-          price,
-          type,
-          pack_quantity,
-          dosage,
-          image,
-          undercategory_id
-        }),
+        body: formData,
         headers:{
-        "Content-type": "application/json; charset=UTF-8",
         "Authorization":token
       }
-      })
+      });
      if(!response.ok){
         setErr("Not Found")
      }
@@ -70,15 +66,16 @@ export default function CreateProduct() {
       }}
       noValidate
       autoComplete="off">
-        <TextField id='name' required label="Name" onChange={(e)=>setName(e.target.value)}></TextField>
-        <TextField id='price' required label="Price" onChange={(e)=>setPrice(e.target.value)}></TextField>
-        <TextField id='type ' required label="Type" onChange={(e)=>setType(e.target.value)}></TextField>
-        <TextField id='pack_quantity' required label="Pack_quantity" onChange={(e)=>setPack_quantity(e.target.value)}></TextField>
-        <TextField id='dosage' required label="Dosage" onChange={(e)=>setDosage(e.target.value)}></TextField>
+        <TextField id='name' required label="Name" onChange={(e)=>setName(e.target.value)}>Name</TextField>
+        <TextField id='price' required label="Price" onChange={(e)=>setPrice(e.target.value)}>Price</TextField>
+        <TextField id='type ' required label="Type" onChange={(e)=>setType(e.target.value)}>Type</TextField>
+        <TextField id='pack_quantity' required label="Pack_quantity" onChange={(e)=>setPack_quantity(e.target.value)}>Pack_quantity</TextField>
+        <TextField id='dosage' required label="Dosage" onChange={(e)=>setDosage(e.target.value)}>Dosage</TextField>
         <input
           type="file"
+          name="img"
           accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e) => setImage(e.target.files)}
         />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">UnderCategory</InputLabel>

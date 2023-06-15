@@ -1,4 +1,4 @@
-import { Container, TableBody, TableCell, TableContainer, TableHead, TableRow, Stack, Button } from '@mui/material'
+import { Container, TableBody, TableCell,tableCellClasses, TableContainer, TableHead, TableRow, Stack, Button } from '@mui/material'
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Table from "@mui/material/Table";
@@ -7,6 +7,29 @@ import { Link } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+      textAlign: "center", 
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+      textAlign: "center", 
+    },
+  }));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 export default function Product() {
     const[products, setProduct] = useState([])
@@ -33,52 +56,53 @@ export default function Product() {
             <Link to="/createproduct">New Product</Link>{" "}
           </Button>
         </Stack>
-            <TableContainer 
-            component={Paper}
-            sx={{ width: "120%", margin: "50px auto" }}
-            >
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead >
+        <TableContainer component={Paper}>
+                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                    <TableHead>
                         <TableRow>
-                            <TableCell align="center">Name</TableCell>
-                            <TableCell align="center">Price</TableCell>
-                            <TableCell align="center">Type</TableCell>
-                            <TableCell align="center">Pack_quantity</TableCell>
-                            <TableCell align="center">Dosage</TableCell>
-                            <TableCell align="center">UnderCategory Name</TableCell>
-                            <TableCell align="center">Image</TableCell>
-                            <TableCell align="center">Options</TableCell>
+                            <StyledTableCell>Name</StyledTableCell>
+                            <StyledTableCell align="right">Price</StyledTableCell>
+                             <StyledTableCell align="right">Type</StyledTableCell>
+                            <StyledTableCell align="right">Pack_quantity</StyledTableCell>
+                            <StyledTableCell align="right">Dosage</StyledTableCell>
+                            <StyledTableCell align="right">UnderCategory Name</StyledTableCell>
+                            <StyledTableCell align="right">Image</StyledTableCell>
+                            <StyledTableCell align="right">Options</StyledTableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {products.map((products)=>(
-                          <TableRow
-                          key={products.id}
-                          >
-                              <TableCell align="center">{products.name}</TableCell>
-                              <TableCell align="center">{products.price}</TableCell>
-                              <TableCell align="center">{products.type}</TableCell>
-                              <TableCell align="center">{products.pack_quantity}</TableCell>
-                              <TableCell align="center">{products.dosage}</TableCell>
-                              <TableCell align="center">{products.UnderCategory?.name}</TableCell>
-                              <TableCell>
-                                    <img src={`http://localhost:5000/${products?.img}`} alt="Product" style={{ width: "100px", height: "100px" }} />
-                                </TableCell>
-                              <TableCell align="center">
-                                  <Link to={`/updateproduct/${products.id}`}>
-                                      <EditIcon />
-                                  </Link>
-                                  <Link to={`/deleteproduct/${products.id}`}>
-                              <DeleteOutlineIcon />
-                              </Link>
-                              </TableCell>
-                          </TableRow>
-                            ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <Button onClick={()=>navigate('/admin')}>Back</Button>
-        </Container>
-    </div>
-  )
+                 <TableBody>
+                 {products.map((products) => (
+            <StyledTableRow key={products.id}>
+              <StyledTableCell component="th" scope="row">
+                {products.name}
+              </StyledTableCell>
+              <StyledTableCell align="right">{products.price}</StyledTableCell>
+              <StyledTableCell align="right">{products.type}</StyledTableCell>
+              <StyledTableCell align="right">{products.pack_quantity}</StyledTableCell>
+              <StyledTableCell align="right">{products.dosage}</StyledTableCell>
+                <StyledTableCell align="right">{products.UnderCategory?.name}</StyledTableCell>
+                <StyledTableCell align="right">
+                    <img src={`http://localhost:5000/${products?.img}`} alt="Product" style={{ width: "100px", height: "100px" }} />
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                <Link to={`/updateproduct/${products.id}`}>
+                        <EditIcon />
+                </Link>
+                <Link to={`/deleteproduct/${products.id}`}>
+                        <DeleteOutlineIcon />
+                </Link>
+                </StyledTableCell>
+                    </StyledTableRow>
+                         ))}
+                     </TableBody>
+                    </Table>
+                </TableContainer>
+                    <Button onClick={()=>navigate('/admin')}>Back</Button>
+            </Container>
+            </div>
+  );
 }
+
+
+    
+        

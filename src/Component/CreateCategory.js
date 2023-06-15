@@ -7,32 +7,39 @@ export default function CreateCategory() {
   const[err, setErr] = useState('')
   const [image, setImage] = useState(null)
   const navigate=useNavigate()
-  async function submitCreateCategory(e){
-    e.preventDefault()
-    const token = localStorage.getItem('token')
-    if(name.trim() === ""){
-      setErr("Fill all fields")
-      return
+
+  async function submitCreateCategory(e) {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    if (name.trim() === '') {
+        setErr('Fill all fields');
+        return;
     }
-    try{
-      const response = await fetch('http://localhost:5000/cat/new', {
-        method: "POST",
-        body: JSON.stringify({
-          name
-        }),
-        headers:{
-          "Content-type": "application/json; charset=UTF-8",
-          "Authorization":token
+
+    const formData = new FormData();
+    formData.append('name', name);
+    if (image) {
+        formData.append('img', image[0]);
+    }
+
+    try {
+        const response = await fetch('http://localhost:5000/cat/new', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                "Authorization": token
+            }
+        });
+
+        if (!response.ok) {
+            setErr('Not Found');
         }
-      })
-      if(!response.ok){
-        setErr("Not Found")
-      }
-    } catch(err){
-      console.log(err)
+    } catch (err) {
+        console.log(err);
     }
-    setName('')
-  }
+    setName('');
+}
+ 
   return (
     <div>
       <Box component="form"

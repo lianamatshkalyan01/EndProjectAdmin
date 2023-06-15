@@ -1,12 +1,15 @@
-import { Container, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Stack } from '@mui/material'
 import React from 'react'
 import { useState, useEffect } from 'react'
-import Table from "@mui/material/Table";
-import Paper from "@mui/material/Paper";
-import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 function User() {
-    const navigate=useNavigate()
     const [users, setUsers] = useState([])
     useEffect(()=>{
         fetch('http://localhost:5000/user/users')
@@ -14,45 +17,54 @@ function User() {
         .then(data=>setUsers(data))
     })
 
-  return (
-    <div>
-        <Container sx={{ display: "flex", flexDirection: "column" }}>
-        <Stack
-          sx={{
-            display: "flex",
-            justifyContent: "end",
-            alignItems: "end",
-            marginTop: "20px",
-          }}
-        >
-        </Stack>
-            <TableContainer
-            component={Paper}
-            sx={{ width: "90%", margin: "50px auto" }}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead >
-                        <TableRow >
-                            <TableCell sx={{fontWeight:"bold", fontSize:"20px"}}>First Name</TableCell>
-                            <TableCell sx={{fontWeight:"bold", fontSize:"20px"}}>Last Name</TableCell>
-                            <TableCell sx={{fontWeight:"bold", fontSize:"20px"}}>E-Mail</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {users.map((user)=>(
-                            <TableRow
-                            key={user.id}
-                            >
-                                <TableCell>{user.first_name}</TableCell>
-                                <TableCell>{user.last_name}</TableCell>
-                                <TableCell>{user.email}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </Container>
-    </div>
-  )
-}
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: theme.palette.common.black,
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+      }));
+      
+      const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+          border: 0,
+        },
+      }));
+
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh', width:'120vh' }}>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell align="right" sx={{fontWeight:'bold', fontSize:'18px' }}>First Name</StyledTableCell>
+                  <StyledTableCell align="right" sx={{fontWeight:'bold', fontSize:'18px' }}>Last Name</StyledTableCell>
+                  <StyledTableCell align="right" sx={{fontWeight:'bold', fontSize:'18px' }}>Email</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {users.map((user) => (
+                  <StyledTableRow key={user.id}>
+              
+                    <StyledTableCell align="right">{user.first_name}</StyledTableCell>
+                    <StyledTableCell align="right">{user.last_name}</StyledTableCell>
+                    <StyledTableCell align="right">{user.email}</StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          </div>
+        );
+      }
 
 export default User
+
+
